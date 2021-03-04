@@ -18,7 +18,12 @@ python3 manage.py createsuperuser
 
 python3 manage.py runserver
 
-### Admin Panel:
+### Initial Data
+
+Initially, all the tables are empty.  
+Feel free to add tables, legs and feet through the admin panel.
+
+### Admin Panel
 
 /admin/
 
