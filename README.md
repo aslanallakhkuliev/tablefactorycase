@@ -24,10 +24,10 @@ python3 manage.py runserver
 
 ### API Structure
 
-"api/tables/
-"api/tables/create/
-"api/tables/<int:pk>/
-"api/tables/<int:pk>/update/
+api/tables/
+api/tables/create/
+api/tables/<int:pk>/
+api/tables/<int:pk>/update/
 api/tables/<int:pk>/delete/
 
 api/legs/
