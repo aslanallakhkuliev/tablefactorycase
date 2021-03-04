@@ -21,7 +21,7 @@ python3 manage.py runserver
 ### Initial Data
 
 Initially, all the tables are empty.  
-Feel free to add tables, legs and feet through the admin panel.
+Feel free to add tables, legs and feet through the admin panel or the API.
 
 ### Admin Panel
 
