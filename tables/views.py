@@ -11,5 +11,7 @@ def table(request, table_id):
     table = get_object_or_404(Table, pk=table_id) 
     legs = Leg.objects.filter(table_id = table_id)
     feet = Foot.objects.filter(legs__in = [1,2,3,4]).distinct()
-    return render(request, 'tables/table.html', { 'table': table, 'legs': legs, 'feet': feet })
+    return render(request, 
+                  'tables/table.html', 
+                  { 'table': table, 'legs': legs, 'feet': feet })
 
