@@ -1,4 +1,4 @@
-### The Solution For The Table Factory Case
+### Solution For The Table Factory Case
 
 git clone https://github.com/aslanallakhkuliev/tablefactorycase.git
 
