@@ -19,17 +19,12 @@ from rest_framework import routers
 from api import views
 
 router = routers.DefaultRouter()
-router.register(r'users', views.UserViewSet)
-router.register(r'groups', views.GroupViewSet)
-#router.register(r'tables', views.TableViewApi)
-#router.register(r'tablesUpdate', views.TableUpdateSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('tables.urls')),
     
     path('api/', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
     path('api/tables/',views.TablesViewAllApi.as_view()),
     path('api/tables/create/',views.TableCreateApi.as_view()),
