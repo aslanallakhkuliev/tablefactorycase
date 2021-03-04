@@ -13,7 +13,7 @@ python3 manage.py makemigrations
 
 python3 manage.py migrate
 
-**Only if not set:**  
+**Only if has not been set before:**  
 python3 manage.py createsuperuser
 
 python3 manage.py runserver
