@@ -22,3 +22,12 @@ class Foot(models.Model):
       raise ValidationError('A foot with a length must also have a width.')
     if self.width and not self.length:
       raise ValidationError('A foot with a width must also have a length.')
+
+  def save(self, *args, **kwargs):
+    if self.radius and (self.length or self.width):
+      raise ValidationError('A foot with a radius must not have length or width.')
+    if self.length and not self.width:
+      raise ValidationError('A foot with a length must also have a width.')
+    if self.width and not self.length:
+      raise ValidationError('A foot with a width must also have a length.')
+    super().save(*args, **kwargs)  # Call the "real" save() method.
