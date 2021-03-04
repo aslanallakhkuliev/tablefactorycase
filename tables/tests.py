@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.test import Client
 from .models import Table, Leg, Foot
+from django.core.exceptions import ValidationError
 import pytest
 
 class TablesTest(TestCase):
@@ -99,7 +100,7 @@ class LegsTest(TestCase):
 
 
 class FeetTest(TestCase):
-    
+
     def test_create(self):
         c = Client()
         c.post('/api/tables/create/', {"name": "Table One"})
@@ -123,9 +124,16 @@ class FeetTest(TestCase):
         c.post('/api/feet/create/', { "radius": 2, "legs": [1]})
         c.post('/api/feet/create/', { "radius": 3, "legs": [2]})
         response = c.get('/api/feet/')
-        response_body = response.json()
         self.assertEqual(response.status_code, 200)
-        assert response_body["count"] == 3
+        with pytest.raises(ValidationError) as excinfo:
+          response = c.post('/api/feet/create/', { "radius": 3, "legs": [2], "length": 2})
+        assert "ValidationError" in str(excinfo)
+        with pytest.raises(ValidationError) as excinfo:
+          response = c.post('/api/feet/create/', { "legs": [2], "length": 3})
+        assert "ValidationError" in str(excinfo)
+        with pytest.raises(ValidationError) as excinfo:
+          response = c.post('/api/feet/create/', { "legs": [2], "width": 1})
+        assert "ValidationError" in str(excinfo)
         pass
 
     def test_detail(self):
@@ -148,7 +156,7 @@ class FeetTest(TestCase):
         c.post('/api/legs/create/', {"table_id": "1"})
         c.post('/api/legs/create/', {"table_id": "2"})
         c.post('/api/feet/create/', { "radius": 1, "legs": [1]})
-        response = c.patch('/api/feet/1/update/', json={"legs": [1, 2]})
+        response = c.patch('/api/feet/1/update/', json={"radius": 0.5, "legs": [1, 2]}, content_type='application/json')
         self.assertEqual(response.status_code, 200)
         pass
 
