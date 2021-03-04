@@ -1,8 +1,8 @@
-### The solution for the table factory case
+### The Solution For The Table Factory Case
 
 git clone https://github.com/aslanallakhkuliev/tablefactorycase.git
 
-### How to run the project
+### How To Run The Project
 
 python3 -m venv venv
 source venv/bin/activate
