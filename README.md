@@ -47,6 +47,6 @@ Feel free to add tables, legs and feet through the admin panel.
 /api/feet/<int:pk>/update/  
 /api/feet/<int:pk>/delete/
 
-### Tesing
+### Testing
 
 **Command:** pytest
