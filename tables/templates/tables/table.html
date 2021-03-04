@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<dl>
+    <dt>Table Name:</dt>
+    <dd>{{ table.name }}</dd>
+</dl>
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Leg ID</th>
+            <th scope="col">Feet </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for leg in legs %}
+            <tr>
+                <th scope="row">{{ leg.id }}</th>
+                <td>
+                    {% for foot in feet %}
+                        <b>ID: {{ foot.id }}</b>, Radius: {{ foot.radius }}, Width: {{ foot.width }}, Length: {{ foot.length }} <br/>
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
