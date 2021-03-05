@@ -8,10 +8,12 @@ class TableSerializer(serializers.ModelSerializer):
         model = Table
         fields = ('id', 'name')
 
+
 class LegSerializer(serializers.ModelSerializer):
     class Meta:
         model = Leg
         fields = '__all__'
+
 
 class FootSerializer(serializers.ModelSerializer):
     class Meta:

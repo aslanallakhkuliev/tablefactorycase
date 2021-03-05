@@ -1,8 +1,8 @@
-from django.test import TestCase
-from django.test import Client
+from django.test import TestCase, Client
 from .models import Table, Leg, Foot
 from django.core.exceptions import ValidationError
 import pytest
+
 
 class TablesTest(TestCase):
 
@@ -108,9 +108,9 @@ class FeetTest(TestCase):
         c.post('/api/legs/create/', {"table_id": "1"})
         c.post('/api/legs/create/', {"table_id": "2"})
         c.post('/api/legs/create/', {"table_id": "1"})
-        response = c.post('/api/feet/create/', { "radius": 3, "legs": [1]})
+        response = c.post('/api/feet/create/', {"radius": 3, "legs": [1]})
         self.assertEqual(response.status_code, 201)
-        response = c.post('/api/feet/create/', { "radius": 3, "legs": [1, 2]})
+        response = c.post('/api/feet/create/', {"radius": 3, "legs": [1, 2]})
         self.assertEqual(response.status_code, 201)
         pass
 
@@ -120,19 +120,20 @@ class FeetTest(TestCase):
         c.post('/api/tables/create/', {"name": "Table Two"})
         c.post('/api/legs/create/', {"table_id": "1"})
         c.post('/api/legs/create/', {"table_id": "2"})
-        c.post('/api/feet/create/', { "radius": 1, "legs": [1, 2]})
-        c.post('/api/feet/create/', { "radius": 2, "legs": [1]})
-        c.post('/api/feet/create/', { "radius": 3, "legs": [2]})
+        c.post('/api/feet/create/', {"radius": 1, "legs": [1, 2]})
+        c.post('/api/feet/create/', {"radius": 2, "legs": [1]})
+        c.post('/api/feet/create/', {"radius": 3, "legs": [2]})
         response = c.get('/api/feet/')
         self.assertEqual(response.status_code, 200)
         with pytest.raises(ValidationError) as excinfo:
-          response = c.post('/api/feet/create/', { "radius": 3, "legs": [2], "length": 2})
+            response = c.post('/api/feet/create/',
+                              {"radius": 3, "legs": [2], "length": 2})
         assert "ValidationError" in str(excinfo)
         with pytest.raises(ValidationError) as excinfo:
-          response = c.post('/api/feet/create/', { "legs": [2], "length": 3})
+            response = c.post('/api/feet/create/', {"legs": [2], "length": 3})
         assert "ValidationError" in str(excinfo)
         with pytest.raises(ValidationError) as excinfo:
-          response = c.post('/api/feet/create/', { "legs": [2], "width": 1})
+            response = c.post('/api/feet/create/', {"legs": [2], "width": 1})
         assert "ValidationError" in str(excinfo)
         pass
 
@@ -142,7 +143,7 @@ class FeetTest(TestCase):
         c.post('/api/tables/create/', {"name": "Table Two"})
         c.post('/api/legs/create/', {"table_id": "1"})
         c.post('/api/legs/create/', {"table_id": "2"})
-        c.post('/api/feet/create/', { "radius": 1, "legs": [1, 2]})
+        c.post('/api/feet/create/', {"radius": 1, "legs": [1, 2]})
         response = c.get('/api/feet/1/')
         response_body = response.json()
         self.assertEqual(response.status_code, 200)
@@ -155,8 +156,9 @@ class FeetTest(TestCase):
         c.post('/api/tables/create/', {"name": "Table Two"})
         c.post('/api/legs/create/', {"table_id": "1"})
         c.post('/api/legs/create/', {"table_id": "2"})
-        c.post('/api/feet/create/', { "radius": 1, "legs": [1]})
-        response = c.patch('/api/feet/1/update/', json={"radius": 0.5, "legs": [1, 2]}, content_type='application/json')
+        c.post('/api/feet/create/', {"radius": 1, "legs": [1]})
+        response = c.patch(
+            '/api/feet/1/update/', json={"radius": 0.5, "legs": [1, 2]}, content_type='application/json')
         self.assertEqual(response.status_code, 200)
         pass
 
@@ -166,8 +168,7 @@ class FeetTest(TestCase):
         c.post('/api/tables/create/', {"name": "Table Two"})
         c.post('/api/legs/create/', {"table_id": "1"})
         c.post('/api/legs/create/', {"table_id": "2"})
-        c.post('/api/feet/create/', { "radius": 1, "legs": [1]})
+        c.post('/api/feet/create/', {"radius": 1, "legs": [1]})
         response = c.delete('/api/feet/1/delete/', json={})
         self.assertEqual(response.status_code, 204)
         pass
-
