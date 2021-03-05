@@ -5,6 +5,7 @@ git clone https://github.com/aslanallakhkuliev/tablefactorycase.git
 ### How To Run The Project
 
 python3 -m venv venv
+
 source venv/bin/activate
 
 pip3 install -r requirements.txt
