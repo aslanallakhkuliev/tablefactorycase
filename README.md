@@ -14,7 +14,7 @@ python3 manage.py makemigrations
 
 python3 manage.py migrate
 
-**Create admin user:**  
+**Create admin user (if required):**  
 python3 manage.py createsuperuser
 
 python3 manage.py runserver
