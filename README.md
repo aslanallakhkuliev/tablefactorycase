@@ -18,10 +18,9 @@ python3 manage.py createsuperuser
 
 python3 manage.py runserver
 
-### Initial Data
+### Demo Data (Optional):
 
-Initially, all the tables are empty.  
-Feel free to add tables, legs and feet through the admin panel or the API.
+python manage.py loaddata initial_data.json
 
 ### Admin Panel
 
@@ -48,5 +47,7 @@ Feel free to add tables, legs and feet through the admin panel or the API.
 /api/feet/<int:pk>/delete/
 
 ### Testing
+
+Start the server before running integration tests:
 
 **Command:** pytest

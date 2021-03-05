@@ -1,0 +1,151 @@
+[
+  {
+      "model": "tables.Table",
+      "pk": 1,
+      "fields": {
+          "name": "Table One"
+      }
+  },
+  {
+    "model": "tables.Table",
+    "pk": 2,
+    "fields": {
+        "name": "Table Two"
+    }
+  },
+  {
+    "model": "tables.Table",
+    "pk": 3,
+    "fields": {
+        "name": "Table Three"
+    }
+  },
+  {
+    "model": "tables.Leg",
+    "pk": 1,
+    "fields": {
+        "table_id": 1
+    }
+  },
+  {
+    "model": "tables.Leg",
+    "pk": 2,
+    "fields": {
+        "table_id": 1
+    }
+  },
+  {
+    "model": "tables.Leg",
+    "pk": 3,
+    "fields": {
+        "table_id": 2
+    }
+  },
+  {
+    "model": "tables.Leg",
+    "pk": 4,
+    "fields": {
+        "table_id": 3
+    }
+  },
+  {
+    "model": "tables.Foot",
+    "pk": 1,
+    "fields": {
+        "width": 0,
+        "length": 0,
+        "radius": 2,
+        "legs": [1, 2]
+    }
+  },
+  {
+    "model": "tables.Foot",
+    "pk": 2,
+    "fields": {
+        "width": 10,
+        "length": 20,
+        "radius": 0,
+        "legs": [1, 2]
+    }
+  },
+  {
+    "model": "tables.Foot",
+    "pk": 3,
+    "fields": {
+        "width": 15,
+        "length": 17,
+        "radius": 0,
+        "legs": [2, 3]
+    }
+  },
+  {
+    "model": "tables.Foot",
+    "pk": 4,
+    "fields": {
+        "width": 0,
+        "length": 0,
+        "radius": 4,
+        "legs": [1, 3]
+    }
+  },
+  {
+    "model": "tables.Foot",
+    "pk": 5,
+    "fields": {
+        "width": 7,
+        "length": 8,
+        "radius": 0,
+        "legs": [3]
+    }
+  },
+  {
+    "model": "tables.Foot",
+    "pk": 6,
+    "fields": {
+        "width": 11,
+        "length": 12,
+        "radius": 0,
+        "legs": [1, 2, 3]
+    }
+  },
+  {
+    "model": "tables.Foot",
+    "pk": 7,
+    "fields": {
+        "width": 0,
+        "length": 0,
+        "radius": 4,
+        "legs": [1, 3]
+    }
+  },
+  {
+    "model": "tables.Foot",
+    "pk": 8,
+    "fields": {
+        "width": 11,
+        "length": 15,
+        "radius": 0,
+        "legs": [4]
+    }
+  },
+  {
+    "model": "tables.Foot",
+    "pk": 9,
+    "fields": {
+        "width": 0,
+        "length": 0,
+        "radius": 5,
+        "legs": [2, 4]
+    }
+  },
+  {
+    "model": "tables.Foot",
+    "pk": 10,
+    "fields": {
+        "width": 12,
+        "length": 15,
+        "radius": 0,
+        "legs": [1, 2, 3, 4]
+    }
+  }
+]
