@@ -62,4 +62,4 @@ pytest
 
 ### Upcoming Updates:
 
-User Authorization in the API.
+Token-based authentication for the API.
