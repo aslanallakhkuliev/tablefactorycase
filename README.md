@@ -49,6 +49,12 @@ python manage.py loaddata initial_data.json
 
 ### Testing
 
-Start the server before running integration tests:
+Start the server before running integration tests.
 
-**Command:** pytest
+Pytest should be installed globally:
+pip3 install -U pytest
+
+Activate virtual environment from the project folder:
+source venv/bin/activate
+
+**Run Command:** pytest
