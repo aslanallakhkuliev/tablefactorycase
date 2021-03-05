@@ -59,3 +59,7 @@ source venv/bin/activate
 
 **Run Command:**
 pytest
+
+### Upcoming Updates:
+
+User Authorization in the API.
