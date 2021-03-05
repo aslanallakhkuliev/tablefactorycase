@@ -21,7 +21,7 @@ python3 manage.py runserver
 
 ### Demo Data (Optional):
 
-python manage.py loaddata initial_data.json
+python3 manage.py loaddata initial_data.json
 
 ### Admin Panel
 
