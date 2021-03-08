@@ -52,6 +52,9 @@ Open new terminal (or console) tab.
 Activate virtual environment from the project folder:  
 source venv/bin/activate
 
+**Install Pytest-django:**  
+pipenv install pytest-django
+
 **Run the command:**  
 pytest
 
@@ -67,6 +70,6 @@ PEP8 standards have been applied.
 
 Requirements have been updated.
 
-15 Model Tests have been added (in addition to the API tests).
+11 Model Tests have been added (in addition to the API tests).
 
 API Tests now support django fixtures and user authentication.
