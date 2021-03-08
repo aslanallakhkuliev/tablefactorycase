@@ -4,6 +4,8 @@
 
 git clone https://github.com/aslanallakhkuliev/tablefactorycase.git
 
+cd tablefactorycase
+
 ## How To Run The Project
 
 python3 -m venv venv
