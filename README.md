@@ -39,6 +39,8 @@ python3 manage.py runserver
 
 ## API Structure
 
+One needs to be authorized as a user to access the API.
+
 /api/tables/  
 /api/legs/  
 /api/feet/
