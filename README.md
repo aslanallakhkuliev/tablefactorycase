@@ -48,8 +48,8 @@ User needs to be authenticated to access the API.
 ## Testing
 
 **Tests locations:**  
-tables/tests.py (Testing the Model)  
-api/tests.py (Testing the API)
+/tables/tests.py (Testing the Models)  
+/api/tests.py (Testing the API)
 
 **Open new terminal** (or console) tab and navigate to the project folder.
 
