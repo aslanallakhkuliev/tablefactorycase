@@ -27,7 +27,7 @@ python3 manage.py loaddata initial_data.json
 **Start the server:**  
 python3 manage.py runserver
 
-## User Info (Read-Only)
+## User Interface (Read-Only)
 
 /tables/  
 /legs/  
