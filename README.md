@@ -1,6 +1,6 @@
 # Solution For The Table Factory Case
 
-## Clone The Project
+## Clone This Project
 
 git clone https://github.com/aslanallakhkuliev/tablefactorycase.git
 
