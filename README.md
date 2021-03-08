@@ -21,11 +21,11 @@ python3 manage.py migrate
 **Create admin user (if required):**  
 python3 manage.py createsuperuser
 
-python3 manage.py runserver
-
-## Demo Data (Optional)
-
+**Import demo data (optional):**
 python3 manage.py loaddata initial_data.json
+
+**Start the server:**
+python3 manage.py runserver
 
 ## User Info (Read-Only)
 
