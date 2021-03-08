@@ -66,14 +66,14 @@ pytest
 
 User-authentication for the API has been activated.
 
-API is now using Model ViewSet.
+The API is now using Model ViewSet.
 
 User interface has been simplified similarly to the API.
 
 PEP8 standards have been applied.
 
-Requirements have been updated.
+Requirements file has been updated.
 
-11 Model Tests have been added (in addition to the API tests).
+11 New Model Tests have been added (in addition to the API tests).
 
 API Tests now support django fixtures and user authentication.
