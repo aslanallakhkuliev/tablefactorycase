@@ -24,7 +24,7 @@ python3 manage.py createsuperuser
 **Import demo data (optional):**  
 python3 manage.py loaddata initial_data.json
 
-**Start the server:**
+**Start the server:**  
 python3 manage.py runserver
 
 ## User Info (Read-Only)
