@@ -45,11 +45,9 @@ python3 manage.py runserver
 
 ## Testing
 
-Start the server before running tests.
+Open new terminal (or console) tab and navigate to the project folder.
 
-Open new terminal (or console) tab.
-
-Activate virtual environment from the project folder:  
+**Activate virtual environment from the project folder:**  
 source venv/bin/activate
 
 **Install Pytest-django:**  
@@ -64,7 +62,7 @@ User-authentication for the API has been activated.
 
 API is now using Model ViewSet.
 
-User interface has been simplified similar to the API.
+User interface has been simplified similarly to the API.
 
 PEP8 standards have been applied.
 
