@@ -1,174 +1,177 @@
-from django.test import TestCase, Client
-from .models import Table, Leg, Foot
-from django.core.exceptions import ValidationError
 import pytest
+from django.db import IntegrityError
+from django.test import TransactionTestCase
+from django.core.exceptions import ValidationError
+
+from tables.models import Table, Leg, Foot
 
 
-class TablesTest(TestCase):
-
+class TablesTest(TransactionTestCase):
     def test_create(self):
-        c = Client()
-        response = c.post('/api/tables/create/', {"name": "Table One"})
-        self.assertEqual(response.status_code, 201)
-        response = c.post('/api/tables/create/', {"name": "Table Two"})
-        self.assertEqual(response.status_code, 201)
-        response = c.post('/api/tables/create/', {"name": "Table One"})
-        self.assertEqual(response.status_code, 400)
-        pass
+        Table(name="Table One").save()
+
+        assert Table.objects.count() == 1
+        assert Table.objects.get(pk=1).name == "Table One"
+
+        with self.assertRaises(IntegrityError):
+            Table(name="Table One").save()
+        assert Table.objects.count() == 1
 
     def test_list(self):
-        c = Client()
-        c.post('/api/tables/create/', {"name": "Table One"})
-        c.post('/api/tables/create/', {"name": "Table Two"})
-        response = c.get('/api/tables/')
-        response_body = response.json()
-        self.assertEqual(response.status_code, 200)
-        assert response_body["count"] == 2
-        pass
+        Table(name="Table One").save()
+        Table(name="Table Two").save()
+        Table(name="Table Three").save()
+
+        assert Table.objects.count() == 3
 
     def test_detail(self):
-        c = Client()
-        c.post('/api/tables/create/', {"name": "Table One"})
-        response = c.get('/api/tables/1/')
-        self.assertEqual(response.status_code, 200)
-        response_body = response.json()
-        assert response_body["name"] == "Table One"
-        pass
+        Table(pk=1, name="Table One").save()
+        Table(pk=2, name="Table Two").save()
+        Table(pk=3, name="Table Three").save()
+
+        assert Table.objects.get(pk=2).name == "Table Two"
 
     def test_update(self):
-        c = Client()
-        c.post('/api/tables/create/', {"name": "Table One"})
-        response = c.patch('/api/tables/1/update/', json={"name": "Updated"})
-        self.assertEqual(response.status_code, 200)
-        pass
+        t1 = Table(pk=1, name="Table One")
+        t1.save()
+        t2 = Table(pk=2, name="Table Two")
+        t2.save()
+        t3 = Table(pk=3, name="Table Three")
+        t3.save()
+
+        with self.assertRaises(IntegrityError):
+            t2.name = "Table One"
+            t2.save()
+        assert Table.objects.get(pk=2).name == "Table Two"
 
     def test_delete(self):
-        c = Client()
-        c.post('/api/tables/create/', {"name": "Table One"})
-        response = c.delete('/api/tables/1/delete/', json={})
-        self.assertEqual(response.status_code, 204)
-        pass
+        Table(pk=1, name="Table One").save()
+        Table(pk=2, name="Table Two").save()
+        t3 = Table(pk=3, name="Table Three")
+        t3.save()
+
+        Table.objects.get(pk=3).delete()
+        assert Table.objects.count() == 2
 
 
-class LegsTest(TestCase):
-
+class LegsTest(TransactionTestCase):
     def test_create(self):
-        c = Client()
-        c.post('/api/tables/create/', {"name": "Table One"})
-        response = c.post('/api/legs/create/', {"table_id": "1"})
-        self.assertEqual(response.status_code, 201)
-        pass
+        t1 = Table(name="Table One")
+        t1.save()
+        t2 = Table(name="Table Two Unsaved")
+        l1 = Leg(pk=1, table_id=t1)
+        l1.save()
+
+        assert Leg.objects.count() == 1
+        assert Leg.objects.get(pk=1).table_id == t1
 
     def test_list(self):
-        c = Client()
-        c.post('/api/tables/create/', {"name": "Table One"})
-        c.post('/api/legs/create/', {"table_id": "1"})
-        c.post('/api/legs/create/', {"table_id": "1"})
-        c.post('/api/legs/create/', {"table_id": "1"})
-        response = c.get('/api/legs/')
-        response_body = response.json()
-        self.assertEqual(response.status_code, 200)
-        assert response_body["count"] == 3
-        pass
+        t1 = Table(name="Table One")
+        t1.save()
+        t2 = Table(name="Table Two")
+        t2.save()
+        Leg(table_id=t1).save()
+        Leg(table_id=t2).save()
+
+        assert Leg.objects.count() == 2
 
     def test_detail(self):
-        c = Client()
-        c.post('/api/tables/create/', {"name": "Table One"})
-        c.post('/api/legs/create/', {"table_id": "1"})
-        response = c.get('/api/legs/1/')
-        self.assertEqual(response.status_code, 200)
-        response_body = response.json()
-        assert response_body["table_id"] == 1
-        pass
+        t1 = Table(name="Table One")
+        t1.save()
+        t2 = Table(name="Table Two")
+        t2.save()
+        Leg(pk=1, table_id=t1).save()
+        Leg(pk=2, table_id=t2).save()
+
+        assert Leg.objects.get(pk=1).table_id == t1
 
     def test_update(self):
-        c = Client()
-        c.post('/api/tables/create/', {"name": "Table One"})
-        c.post('/api/tables/create/', {"name": "Table Two"})
-        c.post('/api/legs/create/', {"table_id": "1"})
-        response = c.patch('/api/legs/1/update/', json={"table_id": "2"})
-        self.assertEqual(response.status_code, 200)
-        pass
+        t1 = Table(name="Table One")
+        t1.save()
+        t2 = Table(name="Table Two")
+        t2.save()
+        t3 = Table(name="Table Three Unsaved")
+        l1 = Leg(pk=1, table_id=t1)
+        l1.save()
+        l1.table_id = t2
+        l1.save()
+
+        assert Leg.objects.get(pk=1).table_id == t2
+
+        try:
+            l1.table_id = t3
+            l1.save()
+        except ValueError:
+            pass
+        else:
+            raise AssertionError("ValueError was not raised")
 
     def test_delete(self):
-        c = Client()
-        c.post('/api/tables/create/', {"name": "Table One"})
-        c.post('/api/legs/create/', {"table_id": "1"})
-        response = c.delete('/api/legs/1/delete/', json={})
-        self.assertEqual(response.status_code, 204)
-        pass
+        t1 = Table(name="Table One")
+        t1.save()
+        l1 = Leg(pk=1, table_id=t1)
+        l1.save()
+
+        assert Leg.objects.count() == 1
+
+        Leg.objects.get(pk=1).delete()
+        assert Leg.objects.count() == 0
 
 
-class FeetTest(TestCase):
+class FeetTest(TransactionTestCase):
+    def test_all_methods(self):
+        # Creating and listing objects.
+        #
+        t1 = Table(pk=1, name="Table One")
+        t1.save()
+        t2 = Table(pk=2, name="Table Two")
+        t2.save()
+        #
+        l1 = Leg(table_id=t1)
+        l1.save()
+        l2 = Leg(table_id=t2)
+        l2.save()
+        #
+        f1 = Foot(pk=1, radius=1)
+        f1.save()
+        f1.legs.set([l1, l2])
+        f1.save()
+        f2 = Foot(pk=2, length=15, width=2.7)
+        f2.save()
+        f2.legs.set([l1, l2])
+        f2.save()
+        #
+        assert Foot.objects.count() == 2
+        assert Foot.objects.get(pk=1).radius == 1
+        assert Foot.objects.get(pk=2).length == 15
 
-    def test_create(self):
-        c = Client()
-        c.post('/api/tables/create/', {"name": "Table One"})
-        c.post('/api/tables/create/', {"name": "Table Two"})
-        c.post('/api/legs/create/', {"table_id": "1"})
-        c.post('/api/legs/create/', {"table_id": "2"})
-        c.post('/api/legs/create/', {"table_id": "1"})
-        response = c.post('/api/feet/create/', {"radius": 3, "legs": [1]})
-        self.assertEqual(response.status_code, 201)
-        response = c.post('/api/feet/create/', {"radius": 3, "legs": [1, 2]})
-        self.assertEqual(response.status_code, 201)
-        pass
-
-    def test_list(self):
-        c = Client()
-        c.post('/api/tables/create/', {"name": "Table One"})
-        c.post('/api/tables/create/', {"name": "Table Two"})
-        c.post('/api/legs/create/', {"table_id": "1"})
-        c.post('/api/legs/create/', {"table_id": "2"})
-        c.post('/api/feet/create/', {"radius": 1, "legs": [1, 2]})
-        c.post('/api/feet/create/', {"radius": 2, "legs": [1]})
-        c.post('/api/feet/create/', {"radius": 3, "legs": [2]})
-        response = c.get('/api/feet/')
-        self.assertEqual(response.status_code, 200)
+        # Checking the validation
+        #
         with pytest.raises(ValidationError) as excinfo:
-            response = c.post('/api/feet/create/',
-                              {"radius": 3, "legs": [2], "length": 2})
+            f3 = Foot(pk=3, radius=1, length=3.5)
+            f3.save()
         assert "ValidationError" in str(excinfo)
+        #
         with pytest.raises(ValidationError) as excinfo:
-            response = c.post('/api/feet/create/', {"legs": [2], "length": 3})
+            f3 = Foot(pk=3, length=17)
+            f3.save()
         assert "ValidationError" in str(excinfo)
+        #
         with pytest.raises(ValidationError) as excinfo:
-            response = c.post('/api/feet/create/', {"legs": [2], "width": 1})
+            f3 = Foot(pk=3, width=3.5)
+            f3.save()
         assert "ValidationError" in str(excinfo)
-        pass
 
-    def test_detail(self):
-        c = Client()
-        c.post('/api/tables/create/', {"name": "Table One"})
-        c.post('/api/tables/create/', {"name": "Table Two"})
-        c.post('/api/legs/create/', {"table_id": "1"})
-        c.post('/api/legs/create/', {"table_id": "2"})
-        c.post('/api/feet/create/', {"radius": 1, "legs": [1, 2]})
-        response = c.get('/api/feet/1/')
-        response_body = response.json()
-        self.assertEqual(response.status_code, 200)
-        assert len(response_body["legs"]) == 2
-        pass
+        # Updating the object
+        #
+        f1.radius = 1.75
+        f1.save()
+        #
+        assert Foot.objects.get(pk=1).radius == 1.75
 
-    def test_update(self):
-        c = Client()
-        c.post('/api/tables/create/', {"name": "Table One"})
-        c.post('/api/tables/create/', {"name": "Table Two"})
-        c.post('/api/legs/create/', {"table_id": "1"})
-        c.post('/api/legs/create/', {"table_id": "2"})
-        c.post('/api/feet/create/', {"radius": 1, "legs": [1]})
-        response = c.patch(
-            '/api/feet/1/update/', json={"radius": 0.5, "legs": [1, 2]}, content_type='application/json')
-        self.assertEqual(response.status_code, 200)
-        pass
-
-    def test_delete(self):
-        c = Client()
-        c.post('/api/tables/create/', {"name": "Table One"})
-        c.post('/api/tables/create/', {"name": "Table Two"})
-        c.post('/api/legs/create/', {"table_id": "1"})
-        c.post('/api/legs/create/', {"table_id": "2"})
-        c.post('/api/feet/create/', {"radius": 1, "legs": [1]})
-        response = c.delete('/api/feet/1/delete/', json={})
-        self.assertEqual(response.status_code, 204)
-        pass
+        # Deleting the object
+        #
+        assert Foot.objects.count() == 2
+        #
+        Foot.objects.get(pk=2).delete()
+        assert Foot.objects.count() == 1

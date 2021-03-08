@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Table, Leg, Foot
+
+from tables.models import Table, Leg, Foot
 
 
 class TableAdmin(admin.ModelAdmin):

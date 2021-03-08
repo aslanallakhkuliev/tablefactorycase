@@ -1,47 +1,22 @@
-"""factory URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/3.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-from api import views
 
-router = routers.DefaultRouter()
+from api import views as api_views
+from tables import views as table_views
+
+api_router = routers.DefaultRouter()
+api_router.register(r'tables', api_views.TableViewSet)
+api_router.register(r'legs', api_views.LegViewSet)
+api_router.register(r'feet', api_views.FootViewSet)
+
+table_router = routers.DefaultRouter()
+table_router.register(r'tables', table_views.TablesReadOnlyViewSet)
+table_router.register(r'legs', table_views.LegsReadOnlyViewSet)
+table_router.register(r'feet', table_views.FeetReadOnlyViewSet)
 
 urlpatterns = [
+    path('', include(table_router.urls)),
+    path('api/', include(api_router.urls)),
     path('admin/', admin.site.urls),
-    path('', include('tables.urls')),
-
-    path('api/', include(router.urls)),
-
-    path('api/tables/', views.TablesViewAllApi.as_view()),
-    path('api/tables/create/', views.TableCreateApi.as_view()),
-    path('api/tables/<int:pk>/', views.TableViewByIdApi.as_view()),
-    path('api/tables/<int:pk>/update/', views.TableUpdateApi.as_view()),
-    path('api/tables/<int:pk>/delete/', views.TableDeleteApi.as_view()),
-
-    path('api/legs/', views.LegsViewAllApi.as_view()),
-    path('api/legs/create/', views.LegCreateApi.as_view()),
-    path('api/legs/<int:pk>/', views.LegViewByIdApi.as_view()),
-    path('api/legs/<int:pk>/update/', views.LegUpdateApi.as_view()),
-    path('api/legs/<int:pk>/delete/', views.LegDeleteApi.as_view()),
-
-    path('api/feet/', views.FeetViewAllApi.as_view()),
-    path('api/feet/create/', views.FootCreateApi.as_view()),
-    path('api/feet/<int:pk>/', views.FootViewByIdApi.as_view()),
-    path('api/feet/<int:pk>/update/', views.FootUpdateApi.as_view()),
-    path('api/feet/<int:pk>/delete/', views.FootDeleteApi.as_view()),
-
 ]

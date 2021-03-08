@@ -1,12 +1,12 @@
-from django.contrib.auth.models import User, Group
 from rest_framework import serializers
+
 from tables.models import Table, Leg, Foot
 
 
 class TableSerializer(serializers.ModelSerializer):
     class Meta:
         model = Table
-        fields = ('id', 'name')
+        fields = ('__all__')
 
 
 class LegSerializer(serializers.ModelSerializer):

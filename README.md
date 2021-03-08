@@ -1,8 +1,10 @@
-### Solution For The Table Factory Case
+# Solution For The Table Factory Case
+
+## Clone The Project
 
 git clone https://github.com/aslanallakhkuliev/tablefactorycase.git
 
-### How To Run The Project
+## How To Run The Project
 
 python3 -m venv venv
 
@@ -19,40 +21,31 @@ python3 manage.py createsuperuser
 
 python3 manage.py runserver
 
-### Demo Data (Optional):
+## Demo Data (Optional)
 
 python3 manage.py loaddata initial_data.json
 
-### Admin Panel
+## User Info (Read-Only)
+
+/tables/
+/legs/
+/feet/
+
+## Admin Panel
 
 /admin/
 
-### API Structure
+## API Structure
 
 /api/tables/  
-/api/tables/create/  
-/api/tables/<int:pk>/  
-/api/tables/<int:pk>/update/  
-/api/tables/<int:pk>/delete/
-
 /api/legs/  
-/api/legs/create/  
-/api/legs/<int:pk>/  
-/api/legs/<int:pk>/update/  
-/api/legs/<int:pk>/delete/
+/api/feet/
 
-/api/feet/  
-/api/feet/create/  
-/api/feet/<int:pk>/  
-/api/feet/<int:pk>/update/  
-/api/feet/<int:pk>/delete/
+## Testing
 
-### Testing
+Start the server before running tests.
 
-Start the server before running integration tests.
-
-Pytest should be installed globally:  
-pip3 install -U pytest
+Open new terminal (or console) tab.
 
 Activate virtual environment from the project folder:  
 source venv/bin/activate
@@ -60,6 +53,18 @@ source venv/bin/activate
 **Run Command:**
 pytest
 
-### Upcoming Updates:
+## Recent Changes
 
-Token-based authentication for the API.
+User-authentication for the API has been activated.
+
+API is now using Model ViewSet.
+
+User interface has been simplified similar to the API.
+
+PEP8 standards have been applied.
+
+Requirements have been updated.
+
+15 Model Tests have been added (in addition to the API tests).
+
+API Tests now support django fixtures and user authentication.

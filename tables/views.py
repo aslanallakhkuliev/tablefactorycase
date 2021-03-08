@@ -1,17 +1,22 @@
-from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
-from .models import Table, Leg, Foot
+from rest_framework import viewsets
+
+from tables.models import Table, Leg, Foot
+from tables.serializers import TableSerializer, LegSerializer, FootSerializer
 
 
-def index(request):
-    tables = Table.objects.all()
-    return render(request, 'tables/index.html', {'tables': tables})
+class TablesReadOnlyViewSet(viewsets.ModelViewSet):
+    queryset = Table.objects.all()
+    serializer_class = TableSerializer
+    http_method_names = ['get']
 
 
-def table(request, table_id):
-    table = get_object_or_404(Table, pk=table_id)
-    legs = Leg.objects.filter(table_id=table_id)
-    feet = Foot.objects.filter(legs__in=[1, 2, 3, 4]).distinct()
-    return render(request,
-                  'tables/table.html',
-                  {'table': table, 'legs': legs, 'feet': feet})
+class LegsReadOnlyViewSet(viewsets.ModelViewSet):
+    queryset = Leg.objects.all()
+    serializer_class = LegSerializer
+    http_method_names = ['get']
+
+
+class FeetReadOnlyViewSet(viewsets.ModelViewSet):
+    queryset = Foot.objects.all()
+    serializer_class = FootSerializer
+    http_method_names = ['get']
