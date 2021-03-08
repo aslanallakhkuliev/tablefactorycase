@@ -50,7 +50,7 @@ Open new terminal (or console) tab and navigate to the project folder.
 **Activate virtual environment from the project folder:**  
 source venv/bin/activate
 
-**Install Pytest-django:**  
+**Install Pytest-Django:**  
 pipenv install pytest-django
 
 **Run the command:**  
