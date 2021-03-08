@@ -29,8 +29,8 @@ python3 manage.py runserver
 
 ## User Info (Read-Only)
 
-/tables/
-/legs/
+/tables/  
+/legs/  
 /feet/
 
 ## Admin Panel
