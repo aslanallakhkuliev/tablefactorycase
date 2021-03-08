@@ -52,7 +52,7 @@ Open new terminal (or console) tab.
 Activate virtual environment from the project folder:  
 source venv/bin/activate
 
-**Run the command:**
+**Run the command:**  
 pytest
 
 ## Recent Changes
